@@ -195,3 +195,23 @@ class DefensiveReflexAgent(ReflexCaptureAgent):
 
     def get_weights(self, game_state, action):
         return {'num_invaders': -1000, 'on_defense': 100, 'invader_distance': -10, 'stop': -100, 'reverse': -2}
+
+class MyReflexAgent(ReflexCaptureAgent):
+# approximate Q-learning, NN, search problems combinations A* w/ food if winning w/ opposite agent if losing, alphabeta
+# in principle a good reflexive agent should work
+    def get_features(self, game_state, action):
+        features = util.Counter()
+        successor = self.get_successor(game_state, action)
+        food_list = self.get_food(successor).as_list()
+        features['successor_score'] = -len(food_list)  # self.getScore(successor)
+
+        # Compute distance to the nearest food
+
+        if len(food_list) > 0:  # This should always be True,  but better safe than sorry
+            my_pos = successor.get_agent_state(self.index).get_position()
+            min_distance = min([self.get_maze_distance(my_pos, food) for food in food_list])
+            features['distance_to_food'] = min_distance
+        return features
+
+    def get_weights(self, game_state, action):
+        return {'successor_score': 100, 'distance_to_food': -1}
