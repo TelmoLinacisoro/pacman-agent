@@ -136,7 +136,7 @@ class ReflexCaptureAgent(CaptureAgent):
 
 
 class OffensiveReflexAgent(ReflexCaptureAgent):
-    """
+  """
   A reflex agent that seeks food. This is an agent
   we give you to get an idea of what an offensive agent might look like,
   but it is by no means the best or only way to build an offensive agent.
@@ -149,9 +149,9 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
         features['successor_score'] = -len(food_list)  # self.getScore(successor)
         
         my_state = successor.get_agent_state(self.index)
-        my_pos = my_state.get_position()##########
+        my_pos = my_state.get_position()
         
-        #Enemies, ghosts and invaders
+        # Enemies, ghosts and invaders
         enemies = [successor.get_agent_state(i) for i in self.get_opponents(successor)]
         
         ghosts = [a for a in enemies if not a.is_pacman and a.get_position() != None]
@@ -159,7 +159,7 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
         invaders = [a for a in enemies if a.is_pacman and a.get_position() != None]
         features['invader_distance'] = 0.0
         
-        #different distances to each type of enemy agents
+        # Distances to enemy agents
         if len(invaders) > 0:
             features['invader_distance'] = min([self.get_maze_distance(my_pos, invader.get_position()) for invader in invaders]) +1
         
@@ -182,14 +182,14 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
 
         # Compute distance to the nearest food
 
-        if len(food_list) > 0:  # This should always be True,  but better safe than sorry
+        if len(food_list) > 0:
             my_pos = successor.get_agent_state(self.index).get_position()
             min_distance = min([self.get_maze_distance(my_pos, food) for food in food_list])
             features['distance_to_food'] = min_distance
             features['food_remaining'] = len(food_list)
         
         
-        #Avoid stopping or bugging, PAULA ESTO ES MÁS O MENOS LO QUE QUERIAS IM
+        # Avoid stopping or bugging
         if action == Directions.STOP:
             features['stop'] = 1
         if game_state.get_agent_state(self.index).configuration.direction is not None:
