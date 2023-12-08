@@ -136,7 +136,7 @@ class ReflexCaptureAgent(CaptureAgent):
 
 
 class OffensiveReflexAgent(ReflexCaptureAgent):
-  """
+    """
   A reflex agent that seeks food. This is an agent
   we give you to get an idea of what an offensive agent might look like,
   but it is by no means the best or only way to build an offensive agent.
@@ -146,7 +146,7 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
         features = util.Counter()
         successor = self.get_successor(game_state, action)
         food_list = self.get_food(successor).as_list()
-        features['successor_score'] = -len(food_list)  # self.getScore(successor)
+        features['successor_score'] = -len(food_list)
         
         my_state = successor.get_agent_state(self.index)
         my_pos = my_state.get_position()
@@ -159,7 +159,7 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
         invaders = [a for a in enemies if a.is_pacman and a.get_position() != None]
         features['invader_distance'] = 0.0
         
-        # Distances to enemy agents
+        # Distances enemy agents
         if len(invaders) > 0:
             features['invader_distance'] = min([self.get_maze_distance(my_pos, invader.get_position()) for invader in invaders]) +1
         
@@ -180,7 +180,7 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
                     features['ghost_scared'] = -10
             features['distance_to_ghost'] = ghost_eval
 
-        # Compute distance to the nearest food
+        # Distance nearest food
 
         if len(food_list) > 0:
             my_pos = successor.get_agent_state(self.index).get_position()
@@ -196,7 +196,6 @@ class OffensiveReflexAgent(ReflexCaptureAgent):
             rev = Directions.REVERSE[game_state.get_agent_state(self.index).configuration.direction]
             if action == rev:
                 features['reverse'] = 1
-        
             
         return features
 
