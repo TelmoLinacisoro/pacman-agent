@@ -10,7 +10,7 @@ We considered the following factors:
 
 ### Agent Design
 
-Each agent evaluates possible actions (like moving in a direction) based on a heuristic evaluation function:
+Each agent evaluates actions based on a heuristic evaluation function:
 
 1. **Offensive Agent**: Focuses on maximizing score by aggressively collecting food items and evading ghosts.
 2. **Defensive Agent**: Concentrates on guarding its territory and intercepting enemy Pacman.
